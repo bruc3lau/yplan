@@ -36,6 +36,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .grain{position:absolute;inset:-50%;opacity:.055;pointer-events:none;z-index:29;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(3) infinite}
 @keyframes grain{0%{transform:translate(0,0)}33%{transform:translate(-2%,1%)}66%{transform:translate(1%,-2%)}100%{transform:translate(0,0)}}
 .hud{position:absolute;top:18px;left:20px;right:20px;display:flex;justify-content:space-between;z-index:35;font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.42)}
+.screen-grid{position:absolute;inset:0;z-index:11;pointer-events:none;opacity:.17;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(180deg,#000,transparent 78%)}
+.telemetry{position:absolute;top:0;left:0;right:0;height:34px;z-index:34;display:flex;align-items:center;gap:26px;padding:0 5%;border-bottom:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);font-size:10px;letter-spacing:.14em;color:rgba(255,255,255,.5)}
+.telemetry b{color:var(--gold);font-weight:600}
+.telemetry .sp{flex:1}
+.beat{display:inline-flex;gap:5px;margin-right:8px}
+.beat i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.22);transition:none}
+.beat i.on{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.rail{position:absolute;left:3.4%;top:42%;transform:translateY(-50%);z-index:34;display:flex;flex-direction:column;gap:12px}
+.rail i{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.22);transition:.3s}
+.rail i.on{background:var(--gold);box-shadow:0 0 12px var(--gold);transform:scale(1.7)}
+.factcard{position:absolute;right:5%;top:13%;z-index:34;text-align:right;border-right:2px solid rgba(224,181,106,.6);padding-right:14px}
+.factcard .n{display:block;font-size:clamp(24px,3.6vw,48px);font-weight:300;line-height:1;color:var(--gold);letter-spacing:-.03em}
+.factcard .l{display:block;margin-top:8px;font-size:clamp(9px,.95vw,12px);letter-spacing:.16em;color:rgba(255,255,255,.52)}
 .tc{font-variant-numeric:tabular-nums}
 .scenes{position:absolute;inset:0;z-index:10}
 .scene{position:absolute;inset:0;padding:7% 8% 12%;opacity:0;visibility:hidden;transform:scale(1.015);transition:opacity .55s ease,transform .9s ease,visibility .55s;display:flex;flex-direction:column;justify-content:center}
@@ -43,7 +56,29 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .scene .kicker{font-size:clamp(9px,1.05vw,13px);letter-spacing:.32em;color:var(--gold);margin-bottom:1.1em;text-transform:uppercase}
 .scene h2{margin:0;font-size:clamp(22px,3.5vw,46px);font-weight:600;letter-spacing:.02em;line-height:1.2}
 .scene .lede{margin:.7em 0 0;color:var(--muted);font-size:clamp(11px,1.35vw,17px);line-height:1.7}
-.scene .visual{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:2% 0}
+.scene .visual{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;padding:2% 0;position:relative}
+/* 子镜头数据卡：每 4 句切换一次 */
+.v-beat{position:absolute;left:0;top:2%;z-index:8;pointer-events:none;display:grid;gap:5px;opacity:0;transform:translateY(10px);transition:opacity .45s,transform .45s;max-width:210px}
+.v-beat.on{opacity:1;transform:none}
+.v-beat .num{font-size:clamp(26px,3.6vw,50px);font-weight:300;line-height:1;color:var(--cyan);letter-spacing:-.03em;text-shadow:0 0 24px rgba(106,215,205,.28)}
+.v-beat .lab{font-size:clamp(10px,1.15vw,14px);letter-spacing:.18em;color:rgba(255,255,255,.86)}
+.v-beat .sub{font-size:clamp(9px,.95vw,12px);color:var(--muted);line-height:1.5}
+.v-beat .dots{display:flex;gap:5px;margin-top:7px}
+.v-beat .dots i{width:16px;height:2px;background:rgba(255,255,255,.18)}
+.v-beat .dots i.on{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.line-meter{position:absolute;left:8%;bottom:14%;z-index:33;font-size:10px;letter-spacing:.18em;color:rgba(255,255,255,.44);font-variant-numeric:tabular-nums}
+.line-meter b{color:var(--gold);font-weight:500}
+.line-meter .bar{display:inline-block;width:70px;height:2px;background:rgba(255,255,255,.14);margin-left:8px;vertical-align:middle}
+.line-meter .bar i{display:block;height:100%;background:var(--gold);width:0}
+.wave{position:absolute;right:5%;bottom:14%;z-index:33;display:flex;align-items:flex-end;gap:2px;height:18px;opacity:.55}
+.wave i{width:2px;background:var(--cyan);height:30%;transition:height .12s}
+.scan{position:absolute;inset:0;z-index:12;pointer-events:none;background:linear-gradient(180deg,transparent 0%,rgba(106,215,205,.05) 50%,transparent 100%);height:22%;top:0;animation:scan 7s linear infinite}
+@keyframes scan{0%{transform:translateY(-120%)}100%{transform:translateY(560%)}}
+.corner{position:absolute;z-index:33;width:14px;height:14px;pointer-events:none;border-color:rgba(224,181,106,.38)}
+.corner.tl{top:42px;left:2.4%;border-top:1px solid;border-left:1px solid}
+.corner.tr{top:42px;right:2.4%;border-top:1px solid;border-right:1px solid}
+.corner.bl{bottom:5%;left:2.4%;border-bottom:1px solid;border-left:1px solid}
+.corner.br{bottom:5%;right:2.4%;border-bottom:1px solid;border-right:1px solid}
 .scene .foot{font-size:clamp(9px,1vw,12px);letter-spacing:.2em;color:rgba(255,255,255,.38);text-transform:uppercase}
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .scene.active .reveal{opacity:1;transform:none}
@@ -167,8 +202,16 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   <div class="stage" id="stage">
     <div class="grain"></div>
+    <div class="screen-grid"></div>
+    <div class="scan"></div>
+    <div class="corner tl"></div><div class="corner tr"></div><div class="corner bl"></div><div class="corner br"></div>
+    <div class="telemetry"><span>66% <b>费前</b></span><span>39% <b>费后</b></span><span>$100B+ <b>利润</b></span><span class="sp"></span><span class="beat" id="beat"><i></i><i></i><i></i><i></i></span><span id="teleScene">01 / 12</span></div>
+    <div class="rail" id="rail"></div>
+    <div class="factcard" id="factcard"><span class="n"></span><span class="l"></span></div>
     <div class="hud"><span>YPLAN · RENAISSANCE / SIMONS</span><span class="tc" id="hudTime">00:00:00</span></div>
     <div class="scenes" id="scenes"></div>
+    <div class="line-meter" id="lineMeter"><b id="lineNum">01</b> / <span id="lineTotal">20</span><span class="bar"><i id="lineBar"></i></span></div>
+    <div class="wave" id="wave"></div>
     <div class="subtitle" id="subtitle"><span id="subText"></span></div>
   </div>
 
@@ -246,67 +289,18 @@ var VIS = {
 };
 
 var SCENES = [
-  {title:'三个数字', visual:'stats', kicker:'01 / OPENING', foot:'1988 — 2018 · MEDALLION FUND', lines:[
-    [0,'如果有人在 1988 年给你一美元，三十年后还给你两万美元，你会相信吗？'],
-    [14,'这不是神话，而是一条真实存在的收益曲线。'],
-    [27,'它的主人叫詹姆斯·西蒙斯，一个把数学写进市场的人。'],
-    [38,'今天这十分钟，我们从数字出发，走进文艺复兴科技。']]},
-  {title:'数学家的另一面', visual:'cipher', kicker:'02 / THE MAN', foot:'MIT · BERKELEY · NSA · STONY BROOK', lines:[
-    [0,'1938 年，西蒙斯出生于美国新泽西。'],
-    [12,'1958 年从麻省理工毕业，23 岁在伯克利拿到数学博士。'],
-    [26,'26 岁，他已经是石溪分校数学系主任。'],
-    [37,'越战期间，他为美国国家安全局破译密码。']]},
-  {title:'陈—西蒙斯形式', visual:'geometry', kicker:'03 / GEOMETRY', foot:'CHERN–SIMONS · OSWALD VEBLEN PRIZE 1976', lines:[
-    [0,'他与陈省身合作，提出了以两人名字命名的「陈—西蒙斯形式」。'],
-    [14,'这个描述三维流形拓扑的量，后来成为拓扑量子场论的基石。'],
-    [28,'38 岁那年，他拿到维布伦几何奖。'],
-    [38,'但 40 岁那年，他做了一个让导师们摇头的决定。']]},
-  {title:'40 岁转身', visual:'pivot', kicker:'04 / THE PIVOT', foot:'MONEMETRICS 1978 → RENAISSANCE 1982', lines:[
-    [0,'1978 年，西蒙斯离开学术界，成立 Monemetrics。'],
-    [13,'1982 年，公司更名为文艺复兴科技。'],
-    [27,'不靠直觉和故事，而是一场用数学重估市场的复兴。'],
-    [38,'他招募数学家和物理学家——不要求懂金融，只要求会建模。']]},
-  {title:'大奖章基金', visual:'medallion', kicker:'05 / MEDALLION', foot:'CLOSED TO OUTSIDE INVESTORS SINCE 2003', lines:[
-    [0,'1988 年，大奖章基金成立。'],
-    [10,'它有一条至今没变过的规矩：只对内部员工和家属开放。'],
-    [24,'三十年里，累计赚取超过一千亿美元的交易利润。'],
-    [36,'费前年化约 66%，费后仍约 39%。']]},
-  {title:'不可能的曲线', visual:'curve', kicker:'06 / THE CURVE', foot:'CAPACITY LIMITED', lines:[
-    [0,'1988 年的一美元，到 2018 年变成约两万美元。'],
-    [13,'同期标普 500 约二十美元，伯克希尔约一百美元。'],
-    [26,'这组数字曾让美国国会都觉得「好得不真实」。'],
-    [37,'但它的另一个名字叫：容量受限。']]},
-  {title:'黑箱方法论', visual:'pipeline', kicker:'07 / THE MACHINE', foot:'HOLDING PERIOD · MINUTES TO HOURS', lines:[
-    [0,'它到底买了什么？答案是：几乎不靠人为判断。'],
-    [13,'「我对任何股票都没有观点，计算机有它的观点，我们乖乖照做。」'],
-    [28,'清洗数据、寻找弱信号、组合模型、自动下单。'],
-    [39,'优势不来自看得更远，而来自看得更细、执行得更快。']]},
-  {title:'量化浩劫与风控', visual:'risk', kicker:'08 / STRESS TEST', foot:'SURVIVE FIRST · RISK CONTROLS', lines:[
-    [0,'2007 年夏天，模型连续失效，那段日子被称为「量化浩劫」。'],
-    [14,'2008 年，大奖章反而录得约 98% 的回报。'],
-    [26,'2020 年疫情动荡中，又拿到约 76%。'],
-    [37,'波动升高就自动收缩头寸——活下来，比赢一次更重要。']]},
-  {title:'争议与边界', visual:'controversy', kicker:'09 / CONTROVERSY', foot:'IRS SETTLEMENT 2021 · FUND CAPACITY', lines:[
-    [0,'2021 年，文艺复兴与美国国税局达成税务和解。'],
-    [13,'高管合计支付约七十亿美元，西蒙斯个人另付约六点七亿美元。'],
-    [28,'面向外部投资者的 RIEF 和 RIDA，表现远不如大奖章。'],
-    [39,'最锋利的工具，往往只对最里面的人开放。']]},
-  {title:'退场', visual:'timeline', kicker:'10 / THE EXIT', foot:'RETIRED 2010 · PASSED AWAY 2024-05-10', lines:[
-    [0,'2009 年，西蒙斯宣布退休，2010 年卸任。'],
-    [12,'2024 年 5 月 10 日，他在纽约去世，享年 86 岁。'],
-    [25,'市场并不只由故事和情绪驱动，它同样留下可被统计捕捉的痕迹。'],
-    [38,'他留下的不是公式，而是一整套怀疑、验证、再验证的方法。']]},
-  {title:'科学遗产', visual:'giving', kicker:'11 / THE FOUNDATION', foot:'SIMONS FOUNDATION · MATH FOR AMERICA', lines:[
-    [0,'1994 年，他和妻子玛丽莲创立西蒙斯基金会。'],
-    [12,'资助数学、基础科学与自闭症研究。'],
-    [24,'2004 年，又发起 Math for America，改善数学教育。'],
-    [36,'把财富重新投向未知，或许是他最后一次押注未来。']]},
-  {title:'四条启示', visual:'takeaways', kicker:'12 / TAKEAWAYS', foot:'SYSTEM · DIVERSIFY · CAPACITY · HUMILITY', lines:[
-    [0,'第一，把决策写下来，系统化胜过临场冲动。'],
-    [10,'第二，分散下注，因为大多数信号都很弱。'],
-    [20,'第三，尊重容量和风险，赚得到的钱未必拿得走。'],
-    [30,'第四，保持谦逊，市场永远会证明你的模型不够完美。'],
-    [40,'用严谨的方法，对付混乱的世界，本身就是一种优雅。']]}
+{title:"1 美元变 2 万",visual:"stats",kicker:"01 / HOOK",foot:"1988 — 2018 · MEDALLION FUND",fact:["2万×", "30 年净值"],beats:[["1:1", "起点", "1988 · 1 美元"],["20,000×", "30 年后", "净值增长"],["20× / 100×", "同期基准", "标普 / 巴菲特"],["66% → 39%", "费前 / 费后", "长期年化"],["$100B+", "累计利润", "只对内部开放"]],lines:[[0.0,"1988年，有人往一个基金里扔了1美元。"],[1.386,"三十年后，这1美元变成两万。"],[4.476,"不是二十倍，是整整两万倍。"],[7.322,"同期标普500，二十美元。"],[10.16,"巴菲特，一百美元出头。"],[11.307,"差距大到国会都传唤他去问话。"],[14.458,"这人叫西蒙斯，本职是数学家。"],[17.591,"一辈子没写过投资书，也不爱接受采访。"],[21.055,"今天十分钟，讲清楚他怎么做到的。"],[24.102,"先说结论：他不靠预测，靠统计。"],[25.419,"这个基金叫大奖章，只对内部人开放。"],[28.813,"你就算有钱，也买不到。"],[30.232,"更夸张的是，它已经关门二十多年。"],[33.431,"门外的人排着队，进不去。"],[35.127,"为什么？等会儿讲。"],[36.168,"记住那个数字：两万倍。"],[37.738,"这不是复利神话，是一台机器。"],[40.72,"一台由博士和代码组成的机器。"],[43.818,"好，从头讲。"],[44.701,"先看他这个人。"]]},
+{title:"履历有点离谱",visual:"cipher",kicker:"02 / THE MAN",foot:"MIT · BERKELEY · NSA · STONY BROOK",fact:["23岁", "伯克利博士"],beats:[["1938 → 1958", "出生到毕业", "新泽西 · MIT"],["23 岁", "伯克利博士", "26 岁当系主任"],["1964", "NSA 破译", "苏联通信"],["1976", "维布伦几何奖", "数学圈头部"],["40 岁", "辞职做交易", "同行看不懂"]],lines:[[0.0,"西蒙斯这个人，履历挺离谱。"],[2.391,"1938年生在新泽西，二十岁MIT毕业。"],[6.218,"二十三岁伯克利博士，二十六当系主任。"],[9.334,"越战时他给国家安全局破密码。"],[12.102,"苏联那边的话，真被他啃下来过。"],[14.806,"IBM也找过他，让他攻击DES加密。"],[17.727,"三十八岁，他拿了维布伦几何奖。"],[18.936,"这在几何学里，属于硬通货。"],[21.533,"到这儿，他已经是数学圈的头部人物。"],[22.528,"然后他干了一件同行看不懂的事。"],[24.649,"四十岁，辞职，去做交易。"],[27.284,"家里人觉得他疯了。"],[28.744,"同行也觉得可惜。"],[30.179,"但他们不知道后面的事。"],[32.171,"他不是逃离数学，是把数学带进了市场。"],[35.316,"这一步，后来值一千多亿美元。"],[37.78,"有意思的是，他从来不说自己天才。"],[40.645,"他说他只是喜欢难题。"],[42.357,"而市场，恰好是最难的那种。"],[44.92,"难题管够。"]]},
+{title:"名字刻进几何",visual:"geometry",kicker:"03 / GEOMETRY",foot:"CHERN–SIMONS · VEBLEN PRIZE 1976",fact:["1976", "维布伦几何奖"],beats:[["CHERN–SIMONS", "三维流形", "拓扑关键量"],["15+ 年", "弦论 / 场论", "广泛使用"],["VEBLEN 1976", "顶级荣誉", "位置很稳"],[" curiosity", "不是缺钱", "就是有意思"],["能力迁移", "数学 → 市场", "找结构"]],lines:[[0.0,"他和陈省身合作，留下一个公式。"],[2.532,"叫陈—西蒙斯形式，名字听着挺绕。"],[5.109,"它其实是三维流形拓扑里的关键量。"],[7.415,"后来搞弦论、拓扑场论的人都在用。"],[9.879,"威滕那种级别的物理学家也拿它当工具。"],[12.604,"说白了，他在数学上的位置已经很稳。"],[15.46,"再干几年，同行提起他就是那位西蒙斯。"],[18.653,"但他偏偏这时候要走。"],[20.563,"他说想去市场里试试。"],[22.424,"不是因为缺钱，就是觉得有意思。"],[24.561,"这个有意思，后来值一千多亿美元。"],[27.021,"好奇心这东西，有时候真能换钱。"],[28.345,"不过别急着学他辞职。"],[30.057,"他辞职之前，已经是几何学顶端了。"],[32.609,"他赌的不是运气，是能力可迁移。"],[35.233,"数学训练给他的，是找结构的能力。"],[37.796,"而市场，就是一堆没写明白的结构。"],[40.358,"别人看噪声，他看公式。"],[42.423,"这就是他真正的起点。"],[43.988,"不是那笔钱，是那套脑子。"]]},
+{title:"PhD 军团",visual:"pivot",kicker:"04 / THE PIVOT",foot:"MONEMETRICS 1978 → RENAISSANCE 1982",fact:["1982", "公司更名"],beats:[["1978", "Monemetrics", "商品期货数据"],["1982", "文艺复兴科技", "公司更名"],["100+ PhD", "只招数理", "不招金融系"],["4 步", "数据→信号", "模型→执行"],["纪律", "模型说话", "人不临场发挥"]],lines:[[0.0,"1978年，他离开学校，开了个小公司。"],[3.25,"叫Monemetrics，做商品期货数据。"],[6.316,"那时候没人觉得这事靠谱。"],[8.783,"1982年改名，文艺复兴科技。"],[11.529,"名字起得挺大，但团队确实不一样。"],[14.428,"他不招金融系的，专招数学和物理博士。"],[17.731,"面试不问你会不会看财报。"],[20.116,"只问你会不会建模，会不会编程。"],[21.797,"一群PhD就这么进了华尔街。"],[24.271,"别人靠调研和直觉，他靠数据和代码。"],[26.146,"这在当年，属于离经叛道。"],[28.491,"不过历史后来站在了他这边。"],[30.362,"公司里一度有上百位博士。"],[32.436,"华尔街同行看着像实验室。"],[34.868,"他不在意，他要的就是这种氛围。"],[35.907,"没有交易员拍脑袋，只有模型说话。"],[37.459,"每个想法都要先过统计这一关。"],[40.035,"过不了就丢掉，不管谁提的。"],[42.345,"包括西蒙斯自己提的。"],[44.117,"这才是真正难复制的部分。"]]},
+{title:"只收自己人",visual:"medallion",kicker:"05 / MEDALLION",foot:"CLOSED TO OUTSIDE INVESTORS SINCE 2003",fact:["$100B+", "累计利润"],beats:[["1988", "大奖章成立", "内部基金"],["2003", "清退外部客户", "容量约束"],["66%", "费前年化", "三十年"],["39%", "费后年化", "5%+44%"],["$100B+", "累计利润", "进不去"]],lines:[[0.0,"1988年，大奖章基金成立。"],[2.973,"它有个规矩，几十年没破过。"],[4.285,"只收自己人，外面的一分不收。"],[7.121,"2003年，连老外部客户都清退了。"],[10.485,"原因不复杂：模型装不下那么多钱。"],[11.922,"规模一大，那点统计优势就没了。"],[13.21,"所以它不是不想赚更多，是赚不动。"],[16.766,"结果呢，费前年化百分之六十六。"],[17.894,"扣掉管理费和提成，还有百分之三十九。"],[21.555,"而且一跑就是三十年。"],[23.856,"累计交易利润，超过一千亿美元。"],[27.294,"这个数字，听一遍基本记不住。"],[30.201,"换个说法：一美元变两万。"],[31.485,"代价是你根本进不去。"],[33.827,"公司员工和家属才能买。"],[36.271,"连老朋友都被请了出去。"],[38.264,"不是耍脾气，是真装不下。"],[39.788,"这叫容量约束，量化里的硬道理。"],[42.962,"钱太多，机会不够分。"],[45.223,"所以他们选择少赚，保住锋利。"]]},
+{title:"好到不真实",visual:"curve",kicker:"06 / THE CURVE",foot:"CAPACITY LIMITED",fact:["39%", "费后年化"],beats:[["20,000×", "大奖章", "1988—2018"],["20×", "标普 500", "同期"],["100×", "伯克希尔", "同期"],["3 数量级", "差距", "不是一点半点"],["抗回撤", "活下来", "才有复利"]],lines:[[0.0,"一美元变两万，听着像骗局对吧。"],[1.493,"但它真的发生了，在1988到2018这三十年。"],[4.813,"同期标普500是二十美元。"],[6.916,"伯克希尔大概一百美元。"],[9.068,"中间差了三个数量级，不是一点半点。"],[11.72,"美国国会听完也犯嘀咕，让他去作证。"],[13.628,"不过这里有个关键词：容量。"],[16.473,"这套打法在小资金上极其锋利。"],[19.103,"钱多了就会变钝，所以干脆关门。"],[21.834,"很多人以为量化是印钞机。"],[24.127,"其实它更像一台精密机床，容错率很低。"],[27.69,"环境对了才出活，不对就停机。"],[30.537,"你看这条曲线，不是一路向上。"],[31.877,"中间有过剧烈的回撤和震荡。"],[34.157,"2007年那次，差点把公司掀翻。"],[36.782,"但每次都活过来了。"],[38.266,"活下来，才有后面的复利。"],[40.565,"所以别只盯着收益率看。"],[42.633,"要看它在最差的时候怎么表现。"],[44.906,"那才是真功夫。"]]},
+{title:"四步流水线",visual:"pipeline",kicker:"07 / THE MACHINE",foot:"HOLDING PERIOD · MINUTES TO HOURS",fact:["4", "步流程"],beats:[["DATA", "清洗历史数据", "剔除噪声"],["MODEL", "可证伪", "讲得通不够"],["SIGNAL", "弱信号叠加", "独立下注"],["EXECUTION", "机器下单", "快一秒"],["MINUTES", "持仓几分钟", "一天几千笔"]],lines:[[0.0,"那它到底买什么？"],[1.312,"西蒙斯有句话：我对股票没观点。"],[2.724,"计算机有观点，我们照着做。"],[4.115,"这话听着像甩锅，其实是纪律。"],[6.94,"整个流程四步：数据、模型、信号、执行。"],[11.361,"先清洗几十年的历史数据，把噪声剔掉。"],[14.768,"再找那些微弱但反复出现的规律。"],[17.397,"单个信号没用，上千个叠起来才有意义。"],[20.291,"最后交给机器下单，人不插手。"],[22.009,"持仓经常只有几分钟，一天几千笔。"],[24.918,"它赚的不是趋势的钱，是细微偏差的钱。"],[28.128,"说白了，它把市场当统计学实验在做。"],[29.085,"数据要干净，脏数据会喂出坏模型。"],[32.381,"模型要能被证伪，不能只讲得通。"],[33.931,"信号要独立，不然等于重复下注。"],[36.654,"执行要快，慢一秒价格就变了。"],[37.787,"每一环都可能出错。"],[39.407,"所以他们把每一环都写进系统。"],[41.859,"人只负责维护系统，不临场发挥。"],[44.628,"这就是机器的意思。"]]},
+{title:"活下来最重要",visual:"risk",kicker:"08 / STRESS TEST",foot:"SURVIVE FIRST · RISK CONTROLS",fact:["+98%", "2008 年回报"],beats:[["2007", "量化浩劫", "模型接连失灵"],["2008", "+98%", "危机年回报"],["2020", "+76%", "疫情年回报"],["AUTO", "自动缩仓", "不押单一模型"],["SURVIVE", "先别输", "再谈赢"]],lines:[[0.0,"但这条路，真不是一路顺风。"],[2.628,"2007年夏天，模型接连失灵。"],[5.651,"那段日子后来有个名字：量化浩劫。"],[6.949,"西蒙斯一度想大幅砍仓。"],[9.084,"结果2008年，大奖章赚了约百分之九十八。"],[12.591,"2020年疫情，又拿到约百分之七十六。"],[15.503,"靠的不是神预测，是风控。"],[17.095,"波动一上来，系统自动缩头寸。"],[19.888,"不把赌注压在单一模型上。"],[22.158,"这一点，很多后来的量化基金没学会。"],[23.139,"能扛住那两年的，其实没几家。"],[25.945,"活着，比某一年赚多少更要紧。"],[26.826,"你想想，收益率再高，爆仓就归零。"],[29.903,"所以风控不是刹车，是安全带。"],[32.962,"出事的时候，它才显出价值。"],[35.442,"他们每天盯的是风险敞口。"],[37.401,"不是今天赚了多少钱。"],[39.157,"顺序反过来，往往就活不长。"],[40.48,"和投资一样，先别输，再谈赢。"],[43.195,"这是大奖章最容易被忽略的一课。"]]},
+{title:"争议与边界",visual:"controversy",kicker:"09 / CONTROVERSY",foot:"IRS SETTLEMENT 2021 · FUND CAPACITY",fact:["$7B", "税务和解"],beats:[["$7B", "2021 税务和解", "高管合计"],["$670M", "西蒙斯个人", "额外支付"],["RIEF / RIDA", "外部基金", "表现一般"],["INCENTIVE", "激励一致", "内部才锋利"],["CAPACITY", "容量决定", "买不到最顶的"]],lines:[[0.0,"赚这么多，麻烦肯定来。"],[2.101,"2021年，公司跟美国国税局和解。"],[4.897,"高管一共掏了大约七十亿美元。"],[7.226,"西蒙斯个人另付六点七亿。"],[9.584,"外界一直盯着问：有没有踩线？"],[11.079,"这个问题，至今没有完全说清。"],[13.631,"还有个更扎心的事实。"],[15.276,"对外发行的RIEF和RIDA，表现很一般。"],[18.293,"跟大奖章完全不是一个量级。"],[20.541,"所以最锋利的那套东西，没对外卖。"],[22.632,"这不是阴谋，是激励和容量决定的。"],[25.352,"你能买到的，往往不是最顶的那一个。"],[26.497,"内部人赚钱，激励自然一致。"],[28.964,"外部客户赎回，会打乱模型。"],[31.43,"所以干脆不收，省掉所有麻烦。"],[34.123,"听起来不近人情，逻辑却很干净。"],[36.759,"这个行业里，利益结构决定结果。"],[39.299,"只看宣传，很容易看错。"],[40.609,"要看钱是谁的钱，风险是谁担。"],[43.371,"这一条，比收益数字更值得记住。"]]},
+{title:"退场",visual:"timeline",kicker:"10 / THE EXIT",foot:"RETIRED 2010 · PASSED AWAY 2024-05-10",fact:["86", "享年"],beats:[["2009 → 2010", "宣布到卸任", "只留名义"],["2024-05-10", "纽约离世", "享年 86"],["METHOD", "怀疑·验证", "再验证"],["SYSTEM", "留下的是系统", "不是直觉"],["LEGACY", "方法比交易", "更值钱"]],lines:[[0.0,"2009年，西蒙斯宣布退休。"],[2.914,"2010年正式卸任，只留个名义。"],[4.828,"2024年5月10日，他在纽约去世，八十六岁。"],[8.804,"一个数学家，把量化这件事彻底改变了。"],[12.552,"以前大家觉得市场靠故事和情绪。"],[15.865,"他证明了，市场也有统计痕迹。"],[18.759,"不是全部，但确实有一块。"],[19.897,"他留下的不是哪个公式。"],[22.0,"是一套方法：怀疑、验证、再验证。"],[23.403,"这套方法比任何单笔交易都值钱。"],[26.395,"因为交易会失效，方法不会。"],[29.083,"这也是普通人最该抄走的东西。"],[31.749,"别把某个高手当神，去看他的流程。"],[33.371,"他怎么提问题，怎么否掉自己。"],[34.803,"怎么在 evidence 不够时保持耐心。"],[37.449,"这些东西，不写在传记里。"],[38.635,"但恰恰是核心。"],[40.238,"他走了，公司还在跑。"],[42.244,"这说明真正留下来的，是系统。"],[44.592,"不是某个人的直觉。"]]},
+{title:"最后一笔押注",visual:"giving",kicker:"11 / THE FOUNDATION",foot:"SIMONS FOUNDATION · MATH FOR AMERICA",fact:["$10B+", "累计捐赠"],beats:[["1994", "西蒙斯基金会", "数学·基础科学"],["2004", "Math for America", "培养数学老师"],["$10B+", "累计捐赠", "估算几十亿"],["LONG", "超长线仓位", "不看净值"],["CURIOSITY", "为好奇心买单", "最大押注"]],lines:[[0.0,"还有一半故事，跟赚钱没关系。"],[2.215,"1994年，他和妻子创立西蒙斯基金会。"],[5.509,"钱投向数学、基础科学，还有自闭症。"],[8.755,"2004年又做了Math for America。"],[11.691,"专门给公立学校培养数学老师。"],[14.294,"据估算，他一生捐出去几十亿美元。"],[17.106,"对一个破过密码、证过定理的人。"],[18.433,"把钱砸向未知，算是最后一次押注。"],[21.084,"这次没有模型，也没有回测。"],[23.373,"但他还是押了。"],[24.632,"可能因为，他知道自己当年靠的是什么。"],[25.68,"是有人愿意为纯粹的好奇心买单。"],[28.334,"他小时候也遇到过这样的老师。"],[30.626,"所以他知道，一个好老师能改变什么。"],[33.382,"数学教育这件事，回报周期特别长。"],[36.211,"长到大部分投资人都没耐心。"],[38.1,"但他愿意等。"],[39.157,"这可能是他最大的一笔长线仓位。"],[41.862,"没有止损线，也不看净值。"],[43.162,"只看很多年后，会多出多少个聪明的脑袋。"]]},
+{title:"四条启示",visual:"takeaways",kicker:"12 / TAKEAWAYS",foot:"SYSTEM · DIVERSIFY · CAPACITY · HUMILITY",fact:["4", "条启示"],beats:[["01 SYSTEM", "把决策写下来", "别靠感觉"],["02 DIVERSIFY", "分散下注", "弱信号叠加"],["03 CAPACITY", "尊重容量风险", "赚到未必拿走"],["04 HUMILITY", "保持谦逊", "市场专治自信"],["STAY", "先活下来", "让时间干活"]],lines:[[0.0,"最后四条，是真的能拿走的。"],[1.504,"第一，把决策写成规则，别靠临场感觉。"],[2.435,"人一激动，动作就变形。"],[4.993,"写下来，才能事后复盘。"],[7.718,"第二，分散下注，因为大多数信号都很弱。"],[9.76,"别指望一把定胜负，那叫赌。"],[11.524,"弱的信号叠起来，也能变成优势。"],[14.549,"第三，尊重容量和风险。"],[17.381,"能赚到的钱，未必拿得走。"],[18.868,"规模是收益率的敌人，这点很少有人讲。"],[22.283,"第四，保持谦逊，市场专治自信。"],[26.057,"再好的模型，也有失效的那天。"],[29.062,"西蒙斯破解市场了吗？"],[31.082,"我觉得没有，他只是比别人更懂规矩。"],[32.297,"他知道自己不知道什么。"],[34.193,"这句话听着简单，做到极难。"],[36.044,"用严谨的方法对付混乱的世界，本身就够了。"],[40.099,"不用赢每一次，只要一直在场。"],[42.881,"如果你只记住一件事："],[44.871,"先活下来，然后让时间干活。"]]}
 ];
 
 /* ---------- DOM ---------- */
@@ -318,13 +312,14 @@ var btnPlay=$('btnPlay'), drawer=$('drawer'), syncTag=$('syncTag');
 SCENES.forEach(function(s,i){
   var el=document.createElement('div');
   el.className='scene'; el.dataset.index=i;
-  el.innerHTML='<div class="kicker">'+s.kicker+'</div><h2>'+s.title+'</h2><div class="visual">'+VIS[s.visual]+'</div><div class="foot">'+s.foot+'</div>';
+  el.innerHTML='<div class="kicker">'+s.kicker+'</div><h2>'+s.title+'</h2><div class="visual">'+VIS[s.visual]+'<div class="v-beat"></div></div><div class="foot">'+s.foot+'</div>';
   scenesEl.appendChild(el);
   s.el=el;
   var mk=document.createElement('i'); mk.style.left=(i/SCENES.length*100)+'%'; marks.appendChild(mk);
   var c=document.createElement('button'); c.className='chap'; c.dataset.index=i;
   c.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span><span class="tt">'+s.title+'<span class="tm">'+fmt(i*SCENE_LEN)+' — '+fmt((i+1)*SCENE_LEN)+'</span></span>';
   $('chapList').appendChild(c);
+  $('rail').appendChild(document.createElement('i'));
 });
 var sceneEls=[].slice.call(scenesEl.children);
 
@@ -354,12 +349,25 @@ function render(force){
   if(force || idx!==lastScene){
     sceneEls.forEach(function(el,i){el.classList.toggle('active',i===idx)});
     [].slice.call($('chapList').children).forEach(function(el,i){el.classList.toggle('cur',i===idx)});
+    [].slice.call($('rail').children).forEach(function(el,i){el.classList.toggle('on',i===idx)});
+    $('teleScene').textContent=String(idx+1).padStart(2,'0')+' / 12';
+    $('factcard').querySelector('.n').textContent=SCENES[idx].fact[0];
+    $('factcard').querySelector('.l').textContent=SCENES[idx].fact[1];
     lastScene=idx;
   }
   var local=time-idx*SCENE_LEN;
-  var lines=SCENES[idx].lines, text='';
-  for(var i=0;i<lines.length;i++){ if(local>=lines[i][0]) text=lines[i][1] }
+  var lines=SCENES[idx].lines, text='', li=0;
+  for(var i=0;i<lines.length;i++){ if(local>=lines[i][0]){ text=lines[i][1]; li=i } }
   if(text!==lastCaption){ subText.textContent=text; subText.style.animation='none'; void subText.offsetWidth; subText.style.animation=''; lastCaption=text }
+  $('lineNum').textContent=String(li+1).padStart(2,'0');
+  $('lineTotal').textContent=String(lines.length).padStart(2,'0');
+  $('lineBar').style.width=((li+1)/lines.length*100)+'%';
+  var beat=sceneEls[idx].querySelector('.v-beat'), bi=Math.min(4,Math.floor(li/4)), bd=SCENES[idx].beats[bi];
+  if(beat && beat.dataset.bi!==String(bi)){
+    beat.dataset.bi=String(bi);
+    beat.innerHTML='<div class="num">'+bd[0]+'</div><div class="lab">'+bd[1]+'</div><div class="sub">'+bd[2]+'</div><div class="dots"><i class="'+(bi===0?'on':'')+'"></i><i class="'+(bi===1?'on':'')+'"></i><i class="'+(bi===2?'on':'')+'"></i><i class="'+(bi===3?'on':'')+'"></i><i class="'+(bi===4?'on':'')+'"></i></div>';
+    beat.classList.add('on');
+  }
   if(idx===0){
     var p=clamp(local/24,0,1);
     [].slice.call(sceneEls[0].querySelectorAll('[data-count]')).forEach(function(el){
@@ -376,6 +384,14 @@ function render(force){
   if(idx===11){
     var fl=$('finalLine'); if(fl) fl.classList.toggle('show',local>39);
   }
+  var wv=$('wave');
+  if(!wv.children.length){for(var wi=0;wi<16;wi++)wv.appendChild(document.createElement('i'))}
+  [].slice.call(wv.children).forEach(function(el,wi){
+    var h=Math.round(18+72*Math.abs(Math.sin(time*2.6+wi*0.53)*Math.cos(time*1.1+wi)));
+    el.style.height=h+'%';
+  });
+  var beatIdx=Math.floor(time/0.5)%4;
+  [].slice.call($('beat').children).forEach(function(el,i){el.classList.toggle('on',i===beatIdx)});
   var r=time/DURATION*100;
   fill.style.width=r+'%'; head.style.left=r+'%';
   $('curTime').textContent=fmt(time); $('hudTime').textContent=tc(time);
